@@ -1,0 +1,128 @@
+@import "tailwindcss";
+
+@theme {
+  --color-brand-bg: #F9F6F0;
+  --color-brand-ink: #F9F6F0;
+  --color-brand-surface: #FFFFFF;
+  --color-brand-surface-light: #FFFFFF;
+  --color-brand-border: rgba(96, 125, 108, 0.15);
+  --color-brand-border-active: #607D6C;
+  --color-brand-text-primary: #2C3531;
+  --color-brand-text-secondary: #5C6762;
+  --color-brand-text-muted: #8E9A94;
+  
+  --color-brand-indigo: #607D6C;
+  --color-brand-indigo-light: #4F6759;
+  --color-brand-violet: #607D6C;
+  --color-brand-violet-light: #4F6759;
+  --color-brand-teal: #607D6C;
+  --color-brand-teal-light: #4F6759;
+  --color-brand-cyan: #D4A373;
+  --color-brand-cyan-light: #B88555;
+  
+  --color-brand-amber: #D4A373;
+  --color-brand-emerald: #607D6C;
+  --color-brand-rose: #C26D5C;
+}
+
+:root {
+  color-scheme: light;
+  background-color: var(--color-brand-bg);
+  color: var(--color-brand-text-primary);
+  font-family: 'Inter', 'Outfit', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  background-color: #F9F6F0;
+  color: #2C3531;
+  overflow-x: hidden;
+}
+
+/* Elegant Warm Theme Classes */
+.glass-panel {
+  background: #FFFFFF;
+  border: 1px solid rgba(96, 125, 108, 0.16);
+  box-shadow: 0 4px 20px -2px rgba(96, 125, 108, 0.06), 0 2px 6px -1px rgba(96, 125, 108, 0.04);
+}
+
+.glass-card {
+  background: #FFFFFF;
+  border: 1px solid rgba(96, 125, 108, 0.12);
+  border-radius: 0.75rem;
+  box-shadow: 0 2px 12px -3px rgba(96, 125, 108, 0.04);
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.glass-card:hover {
+  border-color: rgba(96, 125, 108, 0.4);
+  box-shadow: 0 10px 25px -5px rgba(96, 125, 108, 0.1), 0 8px 10px -6px rgba(96, 125, 108, 0.05);
+  transform: translateY(-2px);
+}
+
+.glass-input {
+  background: #FFFFFF;
+  border: 1px solid rgba(96, 125, 108, 0.25);
+  color: #2C3531;
+  border-radius: 0.5rem;
+  padding: 0.625rem 0.875rem;
+  transition: all 0.2s ease;
+}
+
+.glass-input:focus {
+  outline: none;
+  border-color: #607D6C;
+  box-shadow: 0 0 0 3px rgba(96, 125, 108, 0.15);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(96, 125, 108, 0.05);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(96, 125, 108, 0.2);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(96, 125, 108, 0.4);
+}
+
+/* Scrollbar styling for Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(96, 125, 108, 0.2) rgba(96, 125, 108, 0.05);
+}
+
+/* Custom animations & keyframes */
+@keyframes pulse-subtle {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+
+.pulse-subtle {
+  animation: pulse-subtle 2.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Glow effects adapted to warm palette */
+.glow-indigo {
+  box-shadow: 0 0 45px -5px rgba(96, 125, 108, 0.12);
+}
+
+.glow-violet {
+  box-shadow: 0 0 45px -5px rgba(212, 163, 115, 0.12);
+}
+
+.glow-teal {
+  box-shadow: 0 0 45px -5px rgba(96, 125, 108, 0.08);
+}
