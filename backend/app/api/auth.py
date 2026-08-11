@@ -14,7 +14,7 @@ from app.schemas.auth import (
     UserRegister,
     UserResponse,
 )
-
+from app.models.beneficiary import Beneficiary
 from fastapi.security import OAuth2PasswordRequestForm
 
 router = APIRouter(
@@ -40,9 +40,44 @@ def register(
 
     if existing_user:
         raise HTTPException(
-            status_code=400,
+            status_code=status.HTTP_400_BAD_REQUEST,
             detail="Email already registered",
         )
+
+    # Validate role
+    allowed_roles = {"BENEFICIARY", "VOLUNTEER"}
+
+    if user_data.role not in allowed_roles:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Invalid registration role",
+        )
+
+    # Beneficiary-specific validation
+    if user_data.role == "BENEFICIARY":
+        if not user_data.phone:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="Phone number is required for beneficiaries",
+            )
+
+        if user_data.location_lat is None:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="Latitude is required for beneficiaries",
+            )
+
+        if user_data.location_lng is None:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="Longitude is required for beneficiaries",
+            )
+
+        if not user_data.location_name:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="Location name is required for beneficiaries",
+            )
 
     user = User(
         name=user_data.name,
@@ -52,6 +87,20 @@ def register(
     )
 
     db.add(user)
+    db.flush()
+
+    # Automatically create beneficiary profile
+    if user_data.role == "BENEFICIARY":
+        beneficiary = Beneficiary(
+            user_id=user.id,
+            phone=user_data.phone,
+            location_lat=user_data.location_lat,
+            location_lng=user_data.location_lng,
+            location_name=user_data.location_name,
+        )
+
+        db.add(beneficiary)
+
     db.commit()
     db.refresh(user)
 

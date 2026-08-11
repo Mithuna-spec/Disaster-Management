@@ -1,7 +1,7 @@
 from datetime import datetime
 
 from fastapi import APIRouter, Depends, HTTPException, status
-from sqlalchemy.orm import Session
+from sqlalchemy.orm import Session, selectinload
 
 from app.core.dependencies import get_current_user, require_role
 from app.db.database import get_db
@@ -70,10 +70,14 @@ def assign_volunteer(
     current_user: User = Depends(require_role("ADMIN")),
 ):
     task = (
-        db.query(Task)
-        .filter(Task.id == task_id)
-        .first()
+    db.query(Task)
+    .options(
+        selectinload(Task.volunteer_assignments),
+        selectinload(Task.emergency_request),
     )
+    .filter(Task.id == task_id)
+    .first()
+)
 
     if not task:
         raise HTTPException(
@@ -260,28 +264,16 @@ def get_tasks(
     db: Session = Depends(get_db),
     current_user: User = Depends(get_current_user),
 ):
-    return db.query(Task).all()
-
-
-@router.get("/{task_id}")
-def get_task(
-    task_id: int,
-    db: Session = Depends(get_db),
-    current_user: User = Depends(get_current_user),
-):
-    task = (
+    tasks = (
         db.query(Task)
-        .filter(Task.id == task_id)
-        .first()
+        .options(
+            selectinload(Task.volunteer_assignments),
+            selectinload(Task.emergency_request),
+        )
+        .all()
     )
 
-    if not task:
-        raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND,
-            detail="Task not found",
-        )
-
-    return task
+    return tasks
 
 
 @router.patch("/{task_id}/status")

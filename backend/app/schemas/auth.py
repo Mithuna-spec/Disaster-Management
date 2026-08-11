@@ -7,6 +7,12 @@ class UserRegister(BaseModel):
     password: str = Field(min_length=8, max_length=72)
     role: str = "BENEFICIARY"
 
+    # Beneficiary profile fields
+    phone: str | None = Field(default=None, max_length=20)
+    location_lat: float | None = None
+    location_lng: float | None = None
+    location_name: str | None = Field(default=None, max_length=150)
+
 
 class UserLogin(BaseModel):
     email: EmailStr
