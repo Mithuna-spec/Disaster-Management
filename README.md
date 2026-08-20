@@ -1,6 +1,14 @@
 <div align="center">
 
-![Disaster Relief Coordination and Volunteer Management Platform]
+<div align="center">
+
+![banner](https://capsule-render.vercel.app/api?type=waving&color=0:1e3a8a,100:059669&height=220&section=header)
+
+# Disaster Relief Coordination and Volunteer Management Platform
+
+**A unified digital ecosystem for disaster response and recovery**
+
+</div>
 
 **A unified digital ecosystem connecting Citizens, Volunteers, NGOs, Government Authorities, and Donors — from preparedness to recovery.**
 
